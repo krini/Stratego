@@ -3,6 +3,7 @@ var Brick = require('./brick.react.js');
 var ReactGridLayout = require('react-grid-layout');
 var StrategoStore = require('./../stores/Stratego');
 
+
 var brick = {
     id: 1,
     x: 2,
@@ -10,17 +11,16 @@ var brick = {
 };
 var array = [brick, brick, brick];
 var global = 0;
+var globalRow = 0;
+var globalBrick = 0;
 
-function addRow(row){
-    if(global < 2){
-        var rowIndex = row.index;
-        console.log('row:'+rowIndex);
-        row.map(function(brick){
-        var brickIndex = brick.index;
-        console.log('brick:'+brickIndex);
+function addRow(row, rowID){
+        console.log(rowID);
+        row.map(function(brick, columnID){
+        console.log(columnID);
         global++;
-        return <div key={global} _grid={{x:brickIndex, y:rowIndex, w:50, h:50}}>test</div>;
-    })}
+        return <div key={global} _grid={{x:columnID, y:rowID, w:50, h:50}}>test</div>;
+    });
 }
 
 
