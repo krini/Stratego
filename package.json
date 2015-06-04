@@ -4,13 +4,12 @@
   "description": "React stratego - hack day",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js & npm run watch",
-    "browserify": "browserify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug",
-    "watch": "watchify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://borup@github.com/krini/Stratego.git"
+    "start": "node server",
+    "build": "npm run browserify",
+    "dev": "npm run build-dev & npm start",
+    "build-dev": "npm run watch",
+    "browserify": "browserify components/app.react.js --outfile public/bundle.js --verbose --debug",
+    "watch": "watchify components/app.react.js --outfile public/bundle.js --verbose --debug"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +18,7 @@
   },
   "homepage": "https://github.com/krini/Stratego",
   "dependencies": {
+    "body-parser": "^1.12.3",
     "browserify": "^10.2.3",
     "express": "^4.12.4",
     "react": "^0.13.3",
