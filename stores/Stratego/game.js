@@ -1,7 +1,7 @@
 var board = require('./board');
 var
 
-var checkers= {StandardGame: {Marshal: 1,
+var checkers= {Standard: {Marshal: 1,
                               General: 1,
                               Colonel: 2,
                               Major: 3,
@@ -17,7 +17,7 @@ var checkers= {StandardGame: {Marshal: 1,
 module.exports = {
 
     randomized: function(){
-        var gameType ='StandardGame';
+        var gameType ='Standard';
         var board = board[gameType];
 
     }
