@@ -11,8 +11,6 @@ var brick = {
 };
 var array = [brick, brick, brick];
 var global = 0;
-var globalRow = 0;
-var globalBrick = 0;
 
 function addRow(row, rowID){
         console.log(rowID);
