@@ -7,6 +7,8 @@ module.export = {
     getBoard : boardPosition[10][10],
     move: function(fromBoardPosition, toBoardPosition())
     newGame: function()
-    lastMove: function();
+    state: function()
+    //lastMove: function();
+    //lastMoves: function();
 }
 
