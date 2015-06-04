@@ -2,7 +2,7 @@ var React = require('react');
 var Brick = require('./brick.react.js');
 var ReactGridLayout = require('react-grid-layout');
 var StrategoStore = require('./../stores/Stratego');
-
+var ac = require('../actionCreators/stategoActionCreator');
 
 //var brick = {
 //    id: 1,
@@ -27,9 +27,25 @@ var StrategoStore = require('./../stores/Stratego');
 //}
 
 var Board = React.createClass({
+    getInitialState: function(){
+        return {Board: StrategoStore.getBoard()}
+    },
+    gameChangelistener: function(){
+      this.setState(this.getInitialState());
+    },
+    componentDidMount: function(){
+        StrategoStore.addGameChangeListener(this.gameChangelistener);
+    },
+    componentWillUnmount: function(){
+        StrategoStore.removeGameChangeListener(this.gameChangelistener);
+    },
+    onclick: function(){
 
+        console.log("debug here!!");
+    },
     render: function(){
-        var board = StrategoStore.getBoard();
+        var temp = ac;
+        var board = this.state.Board;
         var rows = [];
         var brickCounter = 0;
         //for( var rows = 0; rows < board.size; rows++) {
@@ -44,20 +60,20 @@ var Board = React.createClass({
             for(var col=0; col <board.size; col++){
                 var pos = board.getIn([row,col]);
                 var checker = pos.get('checker');
-                var checkerText = checker ? checker.player + ' ' +checker.name : "";
-                console.log("col: " + col + " row: " + row);
-                rows.push(<div key={brickCounter++} _grid={{x:col+1, y:row+1, w:50, h:50}}>
-                {pos.get('field')} <br/> {checkerText}</div>);
+                var checkerText = checker ? checker.player + ' ' +checker.name : pos.get('field');
+                rows.push(<div style={{border:"1px solid black"}} key={brickCounter++} _grid={{x:col, y:row, w:1, h:2}}>
+                 {checkerText}</div>);
             }
         }
 
-        return (
-        <div className="layout" cols={10} rowHeight={50}>
+        return <div>
+        <ReactGridLayout className="layout" cols={10} rowHeight={50} >
             {rows}
-        </div>
+        </ReactGridLayout>
+            <button onClick={this.onclick}/>
+        </div>;
 
 
-        )
     }
 });
 
