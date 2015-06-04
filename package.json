@@ -4,7 +4,9 @@
   "description": "React stratego - hack day",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js & npm run watch",
+    "browserify": "browserify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug",
+    "watch": "watchify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,20 @@
   "homepage": "https://github.com/krini/Stratego",
   "dependencies": {
     "browserify": "^10.2.3",
+    "express": "^4.12.4",
     "react": "^0.13.3",
-    "react-grid-layout": "^0.9.1"
+    "react-grid-layout": "^0.9.1",
+    "reactify": "^1.1.1",
+    "watchify": "^3.2.1"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
   }
 }
