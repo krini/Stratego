@@ -23,6 +23,7 @@
     "express": "^4.12.4",
     "flux": "^2.0.3",
     "immutable": "^3.7.3",
+    "object-assign": "^2.0.0",
     "react": "^0.13.3",
     "react-grid-layout": "^0.9.1",
     "reactify": "^1.1.1",
