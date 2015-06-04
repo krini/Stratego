@@ -9,9 +9,18 @@ var brick = {
     y: 3
 };
 var array = [brick, brick, brick];
+var global = 0;
 
-function addBrick(brick){
-        return <div key={brick.id} _grid={{x:brick.x, y:brick.y, w:50, h:50}}>test</div>
+function addRow(row){
+    if(global < 2){
+        var rowIndex = row.index;
+        console.log('row:'+rowIndex);
+        row.map(function(brick){
+        var brickIndex = brick.index;
+        console.log('brick:'+brickIndex);
+        global++;
+        return <div key={global} _grid={{x:brickIndex, y:rowIndex, w:50, h:50}}>test</div>;
+    })}
 }
 
 
@@ -19,10 +28,9 @@ var Board = React.createClass({
 
     render: function(){
         var board = StrategoStore.getBoard();
-        var bricks = array.map(addBrick);
         return (
             <ReactGridLayout className="layout" cols={10} rowHeight={50}>
-            {bricks}
+            {board.map(addRow)}
             </ReactGridLayout>
         )
     }
