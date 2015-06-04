@@ -5,16 +5,20 @@ module.exports = {
         if ( this.moveIsPossible(board, from, to)) {
             return this.doAttackAndUpdateBoard(board, from, to);
         }
+        return board;
     },
     moveIsPossible : function(board, from, to) {
         // Determine if move is possible.
         // Requires:
+        //  - From and to are inside the board
         //  - there is a checker in from position
         //  - from and to are on the same row or on the same column
         //  - Distance between the two positions matches checker ability
         //  - all positions between from and two are of type plain
         //  - all positions between from and two are unoccupied by other checkers
         //  - player at from is different from player at to
+        var fromIsInsideTheBoard = from.row < board.size && from.col < board.get(from.row).size();
+        var toIsInsideTheBoard = to.row < board.size && to.col < board.get(to.row).size();
         var fromPosition = board.get(from.row).get(from.col);
         var toPosition = board.get(to.row).get(to.col);
         var fromChecker = fromPosition.get("checker");
@@ -23,7 +27,7 @@ module.exports = {
         var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) < fromChecker.movesAllowed;
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
-        return thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && playerIsDifferent;
+        return fromIsInsideTheBoard && toIsInsideTheBoard && thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && playerIsDifferent;
     },
     getDistance: function(from,to) {
         var rowDistance = Math.abs(to.row - from.row);
