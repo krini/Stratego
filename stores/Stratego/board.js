@@ -15,7 +15,7 @@ var PositionRecord = Immutable.Record({
 });
 
 var boards ={
-    StandardBoard: function(){
+    Standard: function(){
         var rows = new Immutable.List();
         for(var row=0; row<10; row++){
             var row = new Immutable.List();
