@@ -2,8 +2,8 @@ module.exports = {
     // Assume that from and to are pairs indicating a position (ex. {row :1, col:2})
     // Assumes that board is an immutable list of lists
     move: function(board, from, to) {
-        if ( moveIsPossible(board, from, to)) {
-            return doAttackAndUpdateBoard(from, to);
+        if ( this.moveIsPossible(board, from, to)) {
+            return this.doAttackAndUpdateBoard(board, from, to);
         }
     },
     moveIsPossible : function(board, from, to) {
@@ -19,7 +19,7 @@ module.exports = {
 
         var thereIsACheckerInFromPosition = fromPosition.get("checker") != null;
         var correspondRowOrColumn = from.row == to.row || from.col == to.col;
-        var pathIsTraversable = pathIsTraversable(board, from, to, from.row != to.row);
+        var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
         return thereIsACheckerInFromPosition && correspondRowOrColumn && pathIsTraversable && playerIsDifferent;
     },
@@ -46,7 +46,7 @@ module.exports = {
         // Positions are immutable records
         var attackingPosition = board.get(from.row).get(from.col);
         var defendingPosition = board.get(to.row).get(to.col);
-        if ( attackerWins(attackingPosition,defendingPosition)) { // Attacking an empty position is always a win
+        if ( this.attackerWins(attackingPosition,defendingPosition)) { // Attacking an empty position is always a win
             var newAttackingPosition = attackingPosition.set("checker",  null);
             var newDefendingPosition = defendingPosition.set("checker", attackingPosition.checker);
             // update the board with the new positions
