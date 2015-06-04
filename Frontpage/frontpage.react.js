@@ -6,7 +6,7 @@ var frontpage = React.createClass({
 
 
 render: function () {
-
+    return <div> hej </div>
 }
 });
 
