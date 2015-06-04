@@ -15,24 +15,29 @@ var globalRow = 0;
 var globalBrick = 0;
 
 function addRow(row, rowID){
-        console.log(rowID);
+        //console.log(rowID);
         row.map(function(brick, columnID){
-        console.log(columnID);
-        global++;
-        return <div key={global} _grid={{x:columnID+1, y:rowID+1, w:50, h:50}}>test</div>;
+        //console.log(columnID);
+        return <div key={"" + rowID + columnID} _grid={{x:columnID+1, y:rowID+1, w:50, h:50}}>test</div>
     });
 }
 
+function addTestRow(){
+    return <div key={1} _grid={{x:1, y:1, w:50, h:50}}>test1</div>
+}
 
 var Board = React.createClass({
 
     render: function(){
         var board = StrategoStore.getBoard();
         var bricks = board.map(addRow);
+        //var bricks = addTestRow();
         return (
-            <ReactGridLayout className="layout" cols={10} rowHeight={50}>
+        <ReactGridLayout className="layout" cols={10} rowHeight={50}>
             {bricks}
-            </ReactGridLayout>
+        </ReactGridLayout>
+
+
         )
     }
 });
