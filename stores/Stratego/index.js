@@ -22,7 +22,10 @@ var StrategoStore = assign({},EventEmitter.prototype,{
         this.emit(GAME_CHANGED);
     },
     getGameState: function(){
-
+        return Game.get('State');
+    },
+    getWinner: function(){
+        return Game.get('Winner');
     },
     getBoard: function(){
        if(Game === null){

@@ -35,6 +35,7 @@ module.exports = {
         if(curGame.get('State') !== 'Playing'){
             return false;
         }
+        var positionFrom = curGame.get('Board').getIn([nextMove.from.row, nexMove.from.col]);
         //Not the current players checker that is moved.
         if(positionFrom.get('checker') === null || positionFrom.get('checker').player !== curGame.CurrentPlayer){
             return false;
