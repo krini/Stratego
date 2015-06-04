@@ -17,36 +17,41 @@ module.exports = {
         //  - all positions between from and two are of type plain
         //  - all positions between from and two are unoccupied by other checkers
         //  - player at from is different from player at to
-        var fromIsInsideTheBoard = from.row < board.size && from.col < board.get(from.row).size();
-        var toIsInsideTheBoard = to.row < board.size && to.col < board.get(to.row).size();
+        var fromIsInsideTheBoard = from.row < board.size && from.col < board.get(from.row).size;
+        var toIsInsideTheBoard = to.row < board.size && to.col < board.get(to.row).size;
         var fromPosition = board.get(from.row).get(from.col);
         var toPosition = board.get(to.row).get(to.col);
         var fromChecker = fromPosition.get("checker");
         var thereIsAPieceInTheFromPosition = fromChecker != null;
         var correspondRowOrColumn = from.row == to.row || from.col == to.col;
-        var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) < fromChecker.movesAllowed;
+        var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) <= fromChecker.movesAllowed;
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
-        var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
-        return fromIsInsideTheBoard && toIsInsideTheBoard && thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && playerIsDifferent;
+        var noPlayerOrPlayerIsDifferent = this.noPlayerOrPlayerIsDifferent(fromChecker, toPosition.get("checker"));
+        return fromIsInsideTheBoard && toIsInsideTheBoard && thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && noPlayerOrPlayerIsDifferent;
+    },
+    noPlayerOrPlayerIsDifferent : function(fromChecker,toChecker) {
+        if ( fromChecker && toChecker)
+            return fromChecker.player != toChecker.player;
+        return true;
     },
     getDistance: function(from,to) {
         var rowDistance = Math.abs(to.row - from.row);
         var columnDistance = Math.abs(to.col - from.col);
-        return Math.Max(rowDistance,columnDistance);
+        return Math.max(rowDistance,columnDistance);
 
     },
     pathIsTraversable : function(board, from, to, isRowMove) {
         var result = true;
         if ( isRowMove) {
             // Dont include the final row, this is the target position
-            for( var row = from.row; row <= to.row - 1 && result; row++) {
+            for( var row = from.row+1; row <= to.row - 1 && result; row++) {
                 var position = board.getIn([row,from.column]);
                 result = result && position.get("field").traversable && position.get("checker")== null;
             }
         }
         else {
             // Dont include the final column, this is the target position
-            for( var column = from.column; column <= to.column - 1 && result; column++) {
+            for( var column = from.column+1; column <= to.column - 1 && result; column++) {
                 var position = board.getIn([from.row,column]);
                 result = result && position.get("field").traversable && position.get("checker")== null;
             }
@@ -87,10 +92,9 @@ module.exports = {
     attackerWins : function(attackingPosition, defendingPosition) {
         var attackChecker = attackingPosition.get("checker");
         var defenceChecker = defendingPosition.get("checker");
-        return
-            defenceChecker == null ||
+        return (defenceChecker == null ||
             attackChecker.attackRank > defenceChecker.defenceRank ||
-            (attackChecker.specialAttack && attackChecker.specialAttack(defenceChecker));
+            (attackChecker.specialAttack && attackChecker.specialAttack(defenceChecker)));
 
     }
 };
