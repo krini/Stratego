@@ -5,7 +5,7 @@ var GAME_CHANGED = "GAME_CHANGED";
 var assign = require('object-assign');
 
 var Board  = null;
-
+var Game = null;
 var StrategoStore = assign({},EventEmitter.prototype,{
 
     addGameChangeListener: function(cb){
@@ -24,7 +24,8 @@ var StrategoStore = assign({},EventEmitter.prototype,{
     },
     getBoard: function(){
        if(Board === null){
-           Board = game.StandardRandomized();
+           Game = game.StandardRandomized();
+           Board = Game.Board;
        }
         return Board;
     }
