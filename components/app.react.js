@@ -1,13 +1,14 @@
 var React = require('react');
 
+var App = React.createClass({
 
-var Frontpage = React.createClass({render: function(){
-                   return <div>hest</div>}}
-);
+    render: function(){
+
+       return <div> test</div>;
+    }
+});
 
 window.addEventListener("DOMContentLoaded", function () {
     var outer = document.getElementById('app');
-    React.render(<Frontpage/>, outer);
+    React.render(<App/>, outer);
 });
-
-
