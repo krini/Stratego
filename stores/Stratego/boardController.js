@@ -17,11 +17,11 @@ module.exports = {
         var fromPosition = board.get(from.row).get(from.col);
         var toPosition = board.get(to.row).get(to.col);
 
-        var thereIsACheckerInFromPosition = fromPosition.get("checker") != null;
+        var thereIsAPieceInTheFromPosition = fromPosition.get("checker") != null;
         var correspondRowOrColumn = from.row == to.row || from.col == to.col;
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
-        return thereIsACheckerInFromPosition && correspondRowOrColumn && pathIsTraversable && playerIsDifferent;
+        return thereIsAPieceInTheFromPosition && correspondRowOrColumn && pathIsTraversable && playerIsDifferent;
     },
     pathIsTraversable : function(board, from, to, isRowMove) {
         var result = true;
