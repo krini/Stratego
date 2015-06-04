@@ -23,7 +23,7 @@ module.exports = {
         var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) < fromChecker.movesAllowed;
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
-        return thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk&& pathIsTraversable && playerIsDifferent;
+        return thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && playerIsDifferent;
     },
     getDistance: function(from,to) {
         var rowDistance = Math.abs(to.row - from.row);
@@ -61,16 +61,32 @@ module.exports = {
             board = board.setIn([from.row,from.col], newAttackingPosition);
             return board.setIn([to.row,to.col], newDefendingPosition);
         }
+        else if ( this.isATie(attackingPosition,defendingPosition)) {
+            var newAttackingPosition = attackingPosition.set("checker",  null);
+            var newDefendingPosition = defendingPosition.set("checker", null);
+            // update the board with the new positions
+            board = board.setIn([from.row,from.col], newAttackingPosition);
+            return board.setIn([to.row,to.col], newDefendingPosition);
+        }
         else { // remove attacker from map
             var newAttackingPosition = attackingPosition.set("checker",  null);
             return board.setIn([from.row,from.col], newAttackingPosition);
         }
     },
-    attackerWins : function(attackingPosition, defendingPosition) {
+    isATie: function(attackingPosition, defendingPosition) {
+        var attackChecker = attackingPosition.get("checker");
+        var defenceChecker = defendingPosition.get("checker");
         return
-            defendingPosition.get("checker") == null ||
-            attackingPosition.checker.attackRank > defendingPosition.checker.defenceRank ||
-            (attackingPosition.checker.specialAttack && attackingPosition.checker.specialAttack(defendingPosition.checker));
+            defenceChecker != null &&
+            attackChecker.attackRank == defenceChecker.defenceRank;
+    },
+    attackerWins : function(attackingPosition, defendingPosition) {
+        var attackChecker = attackingPosition.get("checker");
+        var defenceChecker = defendingPosition.get("checker");
+        return
+            defenceChecker == null ||
+            attackChecker.attackRank > defenceChecker.defenceRank ||
+            (attackChecker.specialAttack && attackChecker.specialAttack(defenceChecker));
 
     }
 };
