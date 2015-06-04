@@ -2,7 +2,7 @@ var EventEmitter = require('events').EventEmitter;
 var Dispatcher = require('./../../Dispatcher');
 var game = require('./game');
 var GAME_CHANGED = "GAME_CHANGED";
-
+var assign = require('object-assign');
 
 var Board  = null;
 
