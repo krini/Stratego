@@ -1,5 +1,5 @@
 var field = require('./field');
-
+var Immutable = require('immutable');
 
 function newField(row,col){
     if(row === 4 || row === 5){
@@ -9,16 +9,21 @@ function newField(row,col){
     }
     return field.Plain();
 }
+var PositionRecord = Immutable.Record({
+    field: null,
+    checker: null
+});
 
 var boards ={
     StandardBoard: function(){
-        var rows = [];
+        var rows = new Immutable.List();
         for(var row=0; row<10; row++){
-            var row =[];
-            rows.push(row);
+            var row = new Immutable.List();
+
             for(var col=0; col<10;col++){
-                row.push({field: newField(row,col), checker: null});
+                row = row.push(new PositionRecord({field: newField(row,col), checker: null}));
             }
+            rows = rows.push(row);
         }
         return rows;
     },
