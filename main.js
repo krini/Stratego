@@ -11,7 +11,7 @@ function printBoard( board ) {
                 line += "[" + checker.player + ":" + checker.name + "]";
             }
             else {
-                line += "[EMPTY:" +  position.get("field").name + "]";
+                line += "[" + position.get("field").name + ":EMPTY:" + "]";
             }
         }
         console.log(line);
@@ -21,5 +21,5 @@ var newGame = game.StandardRandomized();
 var theBoard = newGame.Board;
 printBoard(theBoard);
 console.log("\n\n");
-theBoard = boardController.move(theBoard,{row:3,col:0}, {row:4,col:0});
+theBoard = boardController.move(theBoard,{row:4,col:0}, {row:5,col:0});
 printBoard(theBoard);
