@@ -24,7 +24,7 @@ module.exports = {
         var fromChecker = fromPosition.get("checker");
         var thereIsAPieceInTheFromPosition = fromChecker != null;
         var correspondRowOrColumn = from.row == to.row || from.col == to.col;
-        var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) <= fromChecker.movesAllowed;
+        var distanceBetweenPositionsIsOk = fromChecker != null && (fromChecker.movesAllowed == 2 || this.getDistance(from, to) <= fromChecker.movesAllowed);
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var noPlayerOrPlayerIsDifferent = this.noPlayerOrPlayerIsDifferent(fromChecker, toPosition.get("checker"));
         return fromIsInsideTheBoard && toIsInsideTheBoard && thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && noPlayerOrPlayerIsDifferent;
