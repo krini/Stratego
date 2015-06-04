@@ -8,10 +8,6 @@
     "browserify": "browserify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug",
     "watch": "watchify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://borup@github.com/krini/Stratego.git"
-  },
   "author": "",
   "license": "ISC",
   "bugs": {

@@ -1,8 +1,8 @@
 var React = require('react');
 
 
-var Frontpage = React.render(
-                    <div>hest</div>
+var Frontpage = React.createClass({render: function(){
+                   return <div>hest</div>}}
 );
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -10,6 +10,4 @@ window.addEventListener("DOMContentLoaded", function () {
     React.render(<Frontpage/>, outer);
 });
 
-if (typeof window !== 'undefined') {
-    window.React = React;
-}
+
