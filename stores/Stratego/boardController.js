@@ -18,12 +18,15 @@ module.exports = {
     },
     doAttackAndUpdateBoard : function(board, from, to) {
         // Attack logic is as follows:
-        var attackingPosition = board[from.row][from.col];
-        var defendingPosition = board[to.row][to.col];
-        if ( defendingPosition.checker == null) { // Attacking an empty position is always a win
-            defendingPosition.checker = attackingPosition.checker;
-            attackingPosition.checker =  null;
-            return board;
+        // Positions are immutable records
+        var attackingPosition = board.get(from.row).get(from.col);
+        var defendingPosition = board.get(to.row).get(to.col);
+        if ( defendingPosition.get("checker") == null) { // Attacking an empty position is always a win
+            var newAttackingPosition = attackingPosition.set("checker",  null);
+            var newDefendingPosition = defendingPosition.set("checker", attackingPosition.checker);
+            // update the board with the new positions
+            board = board.setIn([from.row,from.col], newAttackingPosition);
+            return board.setIn([to.row,to.col], newDefendingPosition);
         }
         if ( attackingPosition.checker.attackRank > defendingPosition.checker.defenceRank ||
             (attackingPosition.checker.specialAttack && attackingPosition.checker.specialAttack(defendingPosition.checker))) {
