@@ -7,6 +7,7 @@ var GameRecord = Immutable.Record({
     Board: null,
     Players: players,
     CurrentPlayer: 'Player1',
+    Winner: null,
     State: 'Playing'});
 
 
