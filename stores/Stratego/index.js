@@ -1,11 +1,11 @@
 var EventEmitter = require('events').EventEmitter;
 var Dispatcher = require('./../../Dispatcher');
-
+var game = require('./game');
 var GAME_CHANGED = "GAME_CHANGED";
+var assign = require('object-assign');
 
-var Turn = null;
 var Board  = null;
-
+var Game = null;
 var StrategoStore = assign({},EventEmitter.prototype,{
 
     addGameChangeListener: function(cb){
@@ -23,7 +23,11 @@ var StrategoStore = assign({},EventEmitter.prototype,{
 
     },
     getBoard: function(){
-       return new [];
+       if(Board === null){
+           Game = game.StandardRandomized();
+           Board = Game.Board;
+       }
+        return Board;
     }
 
 });

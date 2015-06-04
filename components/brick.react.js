@@ -4,8 +4,13 @@ var React = require('react');
 var Brick = React.createClass({
 
     render: function(){
-
-        return <img src={this.props.imageURL} />
+        var styles = {
+            content:{
+                borderStyle: 'solid',
+                borderWidth: 1
+            }
+        };
+        return(<img src={this.props.imageURL} />)
     }
 });
 

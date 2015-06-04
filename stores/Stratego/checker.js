@@ -9,8 +9,7 @@ var checkers= function(player) { return {
     Captain: function(){return{name:'Captain',movesAllowed:1, attackRank:6, defenceRank:6, player: player}},
     Lieutenant: function(){return{name:'Lieutenant',movesAllowed:1, attackRank:5, defenceRank:5, player: player}},
     Sergent: function(){return{name:'Sergent',movesAllowed:1, attackRank:4, defenceRank:4, player: player}},
-    Miner: function(){return{
-        name: 'Miner', movesAllowed: 1, attackRank: 3, defenceRank: 3,
+    Miner: function(){return{name: 'Miner', movesAllowed: 1, attackRank: 3, defenceRank: 3,
         specialAttack: function (checker) {
             return checker.name === 'Bomb';
         }, player: player

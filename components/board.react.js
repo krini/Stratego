@@ -1,19 +1,29 @@
 var React = require('react');
 var Brick = require('./brick.react.js');
 var ReactGridLayout = require('react-grid-layout');
+var StrategoStore = require('./../stores/Stratego');
 
+var brick = {
+    id: 1,
+    x: 2,
+    y: 3
+};
+var array = [brick, brick, brick];
+
+function addBrick(brick){
+        return <div key={brick.id} _grid={{x:brick.x, y:brick.y, w:50, h:50}}>test</div>
+}
 
 
 var Board = React.createClass({
 
     render: function(){
-
+        var board = StrategoStore.getBoard();
+        var bricks = array.map(addBrick);
         return (
-            <ReactGridLayout className="layout" cols={10} rowHeight={30}>
-        <div key={1}><Brick imageURL='/bomb.png'/></div>
-        <div key={2}>2</div>
-        <div key={3}>3</div>
-        </ReactGridLayout>
+            <ReactGridLayout className="layout" cols={10} rowHeight={50}>
+            {bricks}
+            </ReactGridLayout>
         )
     }
 });
