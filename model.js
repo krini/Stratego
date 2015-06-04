@@ -1,3 +1,4 @@
+/*
 function boardPosition() {
     this.FieldType = ""; // Water, PLain
     this.checkerType =""; // Type of brik
@@ -11,4 +12,4 @@ module.export = {
     //lastMove: function();
     //lastMoves: function();
 }
-
+*/

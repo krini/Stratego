@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node server.js & npm run watch",
-    "browserify": "browserify Frontpage/frontpage.jsx --outfile bundle.js --verbose --debug",
-    "watch": "watchify Frontpage/frontpage.jsx --outfile bundle.js --verbose --debug"
+    "browserify": "browserify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug",
+    "watch": "watchify frontpage/frontpage.react.js --outfile bundle.js --verbose --debug"
   },
   "repository": {
     "type": "git",
