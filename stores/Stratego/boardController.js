@@ -11,17 +11,25 @@ module.exports = {
         // Requires:
         //  - there is a checker in from position
         //  - from and to are on the same row or on the same column
+        //  - Distance between the two positions matches checker ability
         //  - all positions between from and two are of type plain
         //  - all positions between from and two are unoccupied by other checkers
         //  - player at from is different from player at to
         var fromPosition = board.get(from.row).get(from.col);
         var toPosition = board.get(to.row).get(to.col);
-
-        var thereIsAPieceInTheFromPosition = fromPosition.get("checker") != null;
+        var fromChecker = fromPosition.get("checker");
+        var thereIsAPieceInTheFromPosition = fromChecker != null;
         var correspondRowOrColumn = from.row == to.row || from.col == to.col;
+        var distanceBetweenPositionsIsOk = fromChecker.movesAllowed == 2 || this.getDistance(from, to) < fromChecker.movesAllowed;
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var playerIsDifferent = fromPosition.get("checker").player != toPosition.get("checker").player;
-        return thereIsAPieceInTheFromPosition && correspondRowOrColumn && pathIsTraversable && playerIsDifferent;
+        return thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk&& pathIsTraversable && playerIsDifferent;
+    },
+    getDistance: function(from,to) {
+        var rowDistance = Math.abs(to.row - from.row);
+        var columnDistance = Math.abs(to.col - from.col);
+        return Math.Max(rowDistance,columnDistance);
+
     },
     pathIsTraversable : function(board, from, to, isRowMove) {
         var result = true;
