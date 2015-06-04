@@ -17,8 +17,11 @@ module.exports = {
         //  - all positions between from and two are of type plain
         //  - all positions between from and two are unoccupied by other checkers
         //  - player at from is different from player at to
-        var fromIsInsideTheBoard = from.row < board.size && from.col < board.get(from.row).size;
-        var toIsInsideTheBoard = to.row < board.size && to.col < board.get(to.row).size;
+        var fromIsInsideTheBoard = from.row> 0 && from.row < board.size && from.col> 0 && from.col < board.get(from.row).size;
+        var toIsInsideTheBoard = to.row>0&& to.row < board.size && to.col>0 && to.col < board.get(to.row).size;
+        if(!fromIsInsideTheBoard || !toIsInsideTheBoard){
+            return false;
+        }
         var fromPosition = board.get(from.row).get(from.col);
         var toPosition = board.get(to.row).get(to.col);
         var fromChecker = fromPosition.get("checker");
@@ -27,7 +30,7 @@ module.exports = {
         var distanceBetweenPositionsIsOk = fromChecker != null && (fromChecker.movesAllowed == 2 || this.getDistance(from, to) <= fromChecker.movesAllowed);
         var pathIsTraversable = this.pathIsTraversable(board, from, to, from.row != to.row);
         var noPlayerOrPlayerIsDifferent = this.noPlayerOrPlayerIsDifferent(fromChecker, toPosition.get("checker"));
-        return fromIsInsideTheBoard && toIsInsideTheBoard && thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && noPlayerOrPlayerIsDifferent;
+        return thereIsAPieceInTheFromPosition && correspondRowOrColumn &&distanceBetweenPositionsIsOk && pathIsTraversable && noPlayerOrPlayerIsDifferent;
     },
     noPlayerOrPlayerIsDifferent : function(fromChecker,toChecker) {
         if ( fromChecker && toChecker)

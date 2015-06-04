@@ -5,16 +5,16 @@ function gameState(Game){
     var allCheckers = Game.Board.reduce(function(cola, colb){
         return cola.concat(colb);
     }).map(function(position){
-        return position.checker;
+        return position.get('checker');
     });
 
     var flagsPlayer1 = allCheckers.filter(function(checker){
-        return checker.player === Game.get('Players')[0] &&
+        return checker !== null && checker.player === Game.get('Players')[0] &&
             checker.name === 'Flag';
     });
 
     var flagsPlayer2 = allCheckers.filter(function(checker){
-        return checker.player === Game.get('Players')[1] &&
+        return checker !== null && checker.player === Game.get('Players')[1] &&
             checker.name === 'Flag';
     });
     if(flagsPlayer1.size === 0){
@@ -35,13 +35,13 @@ module.exports = {
         if(curGame.get('State') !== 'Playing'){
             return false;
         }
-        var positionFrom = curGame.get('Board').getIn([nextMove.from.row, nexMove.from.col]);
+        var positionFrom = curGame.get('Board').getIn([nextMove.from.row, nextMove.from.col]);
         //Not the current players checker that is moved.
         if(positionFrom.get('checker') === null || positionFrom.get('checker').player !== curGame.CurrentPlayer){
             return false;
         }
         //Move is not possible;
-        return boardController.moveIsPossible(curGame.Board, nextMove.from, nextMove.to);
+        return boardController.moveIsPossible(curGame.get('Board'), nextMove.from, nextMove.to);
     },
 
     spoleGame: function(Game, moves){
@@ -51,10 +51,9 @@ module.exports = {
         });
         var numberOfMoves = moves.length;
         var currentPlayer = Game.get('Players')[numberOfMoves % 2];
-         var newGame = Game.set('Board', currentBoard);
-        newGame = Game.set('CurrentPlayer', currentPlayer);
-        return newGame;
-        //return gameState(newGame);
+        var newGame = Game.set('Board', currentBoard);
+        newGame = newGame.set('CurrentPlayer', currentPlayer);
+        return gameState(newGame);
     }
 
 
