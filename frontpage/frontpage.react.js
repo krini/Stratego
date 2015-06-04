@@ -2,11 +2,6 @@ var React = require('react');
 
 
 
-var frontpage = React.createClass({
-
-
-render: function () {
-    return <div> hej </div>
-}
-});
-
+React.render(
+<div>hest</div>
+);
