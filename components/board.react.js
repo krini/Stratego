@@ -1,6 +1,7 @@
 var React = require('react');
 var Brick = require('./brick.react.js');
 var ReactGridLayout = require('react-grid-layout');
+var StrategoStore = require('./../stores/Stratego');
 
 var brick = {
     id: 1,
@@ -17,6 +18,7 @@ function addBrick(brick){
 var Board = React.createClass({
 
     render: function(){
+        var board = StrategoStore.getBoard();
         var bricks = array.map(addBrick);
         return (
             <ReactGridLayout className="layout" cols={10} rowHeight={50}>
