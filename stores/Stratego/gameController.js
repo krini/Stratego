@@ -53,7 +53,8 @@ module.exports = {
         var currentPlayer = Game.get('Players')[numberOfMoves % 2];
          var newGame = Game.set('Board', currentBoard);
         newGame = Game.set('CurrentPlayer', currentPlayer);
-        return gameState(newGame);
+        return newGame;
+        //return gameState(newGame);
     }
 
 
