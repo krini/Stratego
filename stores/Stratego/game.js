@@ -1,6 +1,15 @@
 var board = require('./board');
 var checker = require('./checker');
 var players = ['Player1','Player2'];
+var Immutable = require('immutable');
+
+var GameRecord = Immutable.Record({
+    Board: null,
+    Players: players,
+    CurrentPlayer: 'Player1',
+    Winner: null,
+    State: 'Playing'});
+
 
 var checkersInGame= {Standard:
             function() {return {Marshal: 1,
@@ -40,7 +49,7 @@ module.exports = {
             var checkers = checkersInGame[gameType]();
             var keys = Object.keys(checkers);
 
-            for (var i = (0 + (6*p)); i < 4 + (6*p); i++) {
+            for (var i = (6*p); i < 4 + (6*p); i++) {
                 for (var j = 0; j < 10; j++) {
                     pos = newBoard.getIn([i,j]);
                     pos = pos.set('checker', randomChecker(player,keys,checkers))
@@ -48,6 +57,9 @@ module.exports = {
                 }
             }
         }
-        return {Board: newBoard, turn: players[0], players: players, state: 'newGame'};
+
+        var Game = new GameRecord();
+        Game = Game.set('Board', newBoard);
+        return  Game;
     }
 }
