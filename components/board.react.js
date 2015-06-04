@@ -19,7 +19,7 @@ function addRow(row, rowID){
         row.map(function(brick, columnID){
         console.log(columnID);
         global++;
-        return <div key={global} _grid={{x:columnID, y:rowID, w:50, h:50}}>test</div>;
+        return <div key={global} _grid={{x:columnID+1, y:rowID+1, w:50, h:50}}>test</div>;
     });
 }
 
@@ -28,9 +28,10 @@ var Board = React.createClass({
 
     render: function(){
         var board = StrategoStore.getBoard();
+        var bricks = board.map(addRow);
         return (
             <ReactGridLayout className="layout" cols={10} rowHeight={50}>
-            {board.map(addRow)}
+            {bricks}
             </ReactGridLayout>
         )
     }
